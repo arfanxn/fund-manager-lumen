@@ -16,3 +16,8 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get("api/example", "ExampleController");
+
+$router->group(["prefix" => "api"], function () use ($router) {
+});
