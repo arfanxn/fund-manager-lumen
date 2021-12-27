@@ -11,8 +11,11 @@ class FundFactory extends Factory
 
     public function definition(): array
     {
-    	return [
-    	    //
-    	];
+        return [
+            // 'user_id' => $this->faker->name,
+            // 'email' => $this->faker->unique()->safeEmail,
+            // "password" =>  Hash::make("111222"),
+            // "token" =>  strtoupper(Str::random()),
+        ];
     }
 }

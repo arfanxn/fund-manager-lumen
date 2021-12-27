@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
+    public function hello(Request $request)
+    {
+        dd($request->all(), $request->header());
+    }
+
     /**
      * Display a listing of the resource.
      *
