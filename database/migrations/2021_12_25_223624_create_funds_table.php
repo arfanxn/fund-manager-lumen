@@ -15,6 +15,7 @@ class CreateFundsTable extends Migration
     {
         Schema::create('funds', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->foreign("user_id")->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger("balance")->default(0);
             $table->timestamps();
