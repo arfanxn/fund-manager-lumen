@@ -14,8 +14,8 @@ class TransactionFactory extends Factory
     {
         $type = ["EXPENSE", "INCOME"];
         return [
-            "user_id" => 1,
-            "fund_id" => 1,
+            "user_id" => rand(1, 35000),
+            "fund_id" => null,
             "amount" => rand(10000, 9999999),
             "type" => $type[rand(0, 1)],
             "note" => substr($this->faker->sentence(), 0, 200),

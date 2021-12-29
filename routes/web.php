@@ -31,7 +31,7 @@ $router->group(["prefix" => "api"], function () use ($router) {
         $router->get("isAuthenticated", "AuthController@isAuth");
 
         $router->group(["prefix" => "fund"], function () use ($router) {
-            $router->get("myfund", "FundController@myFund");
+            $router->get("show", "FundController@show");
             $router->put("update", "FundController@update");
         });
 

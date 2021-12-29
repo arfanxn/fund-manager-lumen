@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Fund;
 use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,13 +27,20 @@ class DatabaseSeeder extends Seeder
 
         // User::factory()->count(10000)->create();
 
-        // for ($i = 1; $i <= 200; $i++) {
+        // for ($i = 1; $i <= 1000; $i++) {
         //     Fund::create([
         //         "user_id" =>  $i,
         //         "balance" => rand(100000, 999999),
         //     ]);
         // }
 
-        Transaction::factory()->count(3000)->create();
+
+        for ($i = 1; $i < 10000; $i++) {
+            try {
+                Transaction::factory()->count(10000)->create();
+            } catch (QueryException $e) {
+                continue;
+            }
+        }
     }
 }
