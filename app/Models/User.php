@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Laravel\Lumen\Auth\Authorizable;
 
+use function PHPUnit\Framework\at;
+
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
@@ -38,5 +40,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         $this->token = $token;
         $this->save();
         return $token;
+    }
+
+    public function fund()
+    {
+        return $this->hasOne(Fund::class, "user_id", "id");
+    }
+
+    public function allTransactions()
+    {
+        return $this->hasMany(Transaction::class, "user_id", "id");
     }
 }

@@ -2,6 +2,7 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /*
@@ -29,9 +30,23 @@ $router->group(["prefix" => "api"], function () use ($router) {
         $router->get("logout", "AuthController@logout");
         $router->get("isAuthenticated", "AuthController@isAuth");
 
-        $router->get("test", function (Request $request) {
-            return dd($request->header(), $request->user());
+        $router->group(["prefix" => "fund"], function () use ($router) {
+            $router->get("myfund", "FundController@myFund");
+            $router->put("update", "FundController@update");
         });
-        // 
+
+        $router->group(["prefix" => "transaction"], function () use ($router) {
+            $router->get("index", "TransactionController@index");
+            $router->post("store", "TransactionController@store");
+            $router->put("update", "TransactionController@update");
+            $router->delete("destroy", "TransactionController@destroy");
+        });
+    });
+
+
+
+    $router->get("test", function (Request $request) {
+        // return dd($request->header(), $request->user());
+        return Carbon::today()->subDays(rand(0, 365))->toDateString();
     });
 });
