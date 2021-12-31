@@ -111,7 +111,7 @@ class TransactionController extends Controller
             if (!$prevTransactionData) return
                 response(["error_message" => ServerError::message()], 500);
 
-            if ($attrs["type"] == Transaction::INCOME) {
+            if ($prevTransactionData->type == Transaction::INCOME) {
                 if (($prevTransactionData->amount) < $attrs["amount"]) {
                     $decrementBy =  intval(($prevTransactionData->amount) - $attrs["amount"]);
                     $fundQueryBuilder->decrement("balance", $decrementBy);
@@ -131,7 +131,6 @@ class TransactionController extends Controller
 
             $isUpdateTransactionSuccess = $transactionQueryBuilder->update([
                 "amount" => $attrs["amount"],
-                "type" =>  $attrs["type"],
                 "note" => $attrs["note"],
                 "date" => $attrs["date"],
             ]);

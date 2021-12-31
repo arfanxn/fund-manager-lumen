@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Fund;
 use App\Models\User;
+use App\Responses\ServerError;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -45,7 +47,6 @@ class AuthController extends Controller
             "password" => "required|string|min:4|max:30",
             "password_confirmation" => "required|string|same:password"
         ]);
-
         $attrs["name"] = ucwords($attrs["name"]);
 
         $user = User::create([
@@ -59,11 +60,18 @@ class AuthController extends Controller
             $attrs["password"]
         );
 
-        return response()
+        $fund = $user && $userAndToken ? Fund::create([
+            "balance" => 0,
+            "user_id" => $userAndToken["user"]->id,
+        ]) : false;
+
+        return $fund ? response()
             ->json([
                 "message" => "success registered as {$attrs['name']}",
                 "user" =>  $userAndToken["user"], "token" => $userAndToken["token"]
-            ]);
+            ]) :
+            response(["error_message" => ServerError::message()]);
+
 
         // ->withCookie(Cookie::create("token", $token));
     }
