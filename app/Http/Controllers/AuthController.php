@@ -76,10 +76,13 @@ class AuthController extends Controller
         // ->withCookie(Cookie::create("token", $token));
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        return response(["message" => "logout success"])
-            ->withCookie(Cookie::create("token", false, 1));
+        $refreshToken = $request->user()->createToken();
+
+        return $refreshToken ? response(["message" => "logout success"])
+            ->withCookie(Cookie::create("token", false, 1))
+            : response(["error_message" => ServerError::message()]);
     }
 
     public function isAuth(Request $request)
