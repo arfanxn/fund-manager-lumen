@@ -7,17 +7,25 @@ use App\Models\Transaction;
 use App\Responses\ServerError;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class TransactionController extends Controller
 {
     public function index(Request $request)
     {
+        $transactions = $request->user()
+            ->allTransactions()->orderBy("created_at", "desc")
+            ->simplePaginate(20);
+
+        if ($request->hasHeader("If-None-Match") && Hash::check($transactions, $request->header("If-None-Match"))) {
+            return response(["message" => "Not Modified"], 304)->header("ETag", $request->header("If-None-Match"));
+        }
+
         return response([
-            "transactions" => $request->user()
-                ->allTransactions()->orderBy("created_at", "desc")
-                ->simplePaginate(10),
-        ]);
+            "transactions" => $transactions,
+        ])->header("ETag", Hash::make($transactions));
     }
 
     /**
