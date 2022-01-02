@@ -17,7 +17,7 @@ class TransactionController extends Controller
     {
         $transactions = $request->user()
             ->allTransactions()->orderBy("created_at", "desc")
-            ->simplePaginate(20);
+            ->simplePaginate(10);
 
         if ($request->hasHeader("If-None-Match") && Hash::check($transactions, $request->header("If-None-Match"))) {
             return response(["message" => "Not Modified"], 304)->header("ETag", $request->header("If-None-Match"));
