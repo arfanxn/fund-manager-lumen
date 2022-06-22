@@ -1,4 +1,4 @@
-# Fund Manager (Laravel/Backend)
+# Fund Manager (Laravel Lumen/Backend)
 
 Fund Manager is a Financial Management application, This application is similar to the Todo application but with different functionalities, 
 built with Laravel Lumen . 
