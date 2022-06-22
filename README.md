@@ -10,7 +10,7 @@ Install all composer dependencies
 composer install --ignore-platform-reqs
 ```
 
-Migrate Payfan required tables and seed data to tables
+Migrate required tables and seed data to tables
 ```sh
 php artisan migrate 
 php artisan db:seed
@@ -29,6 +29,6 @@ your preferred browser.
 ```
 
 ## License
-MIT && PAYFAN
+MIT && FUND MANAGER
 
 **Open Source**
